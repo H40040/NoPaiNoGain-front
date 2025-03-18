@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="NoPainNoGain" type="Application" factoryName="Application" singleton="false">
+    <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../Program Files/Microsoft/jdk-17.0.14.7-hotspot" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <envs>
+      <env name="ANDROID_HOME" value="C:\Users\H40040\AppData\Local\Android\Sdk" />
+      <env name="ANDROID_SDK_ROOT" value="C:\Users\H40040\AppData\Local\Android\Sdk" />
+      <env name="CLASSPATH" value=".;" />
+      <env name="JAVA_HOME" value="C:\Program Files\Eclipse Adoptium\jdk-17.0.14.7-hotspot" />
+      <env name="Path" value="C:\Program Files\Google\Chrome\Application;C:\Program Files\Eclipse Adoptium\jdk-17.0.14.7-hotspot;C:\Program Files\Eclipse Adoptium\jdk-11.0.26.4-hotspot\bin;C:\Python27\;C:\Python27\Scripts;C:\Program Files\Microsoft\jdk-17.0.14.7-hotspot\bin;C:\Python313\Scripts\;C:\Python313\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\MongoDB\Server\8.0\bin;C:\Users\H40040\AppData\Local\Android\Sdk\cmdline-tools\bin\platform-tools;C:\Users\H40040\AppData\Local\Android\Sdk\cmdline-tools\bin\build-tools\35.0.1;C:\Program Files\nodejs\;C:\Program Files\Eclipse Adoptium\jdk-17.0.14.7-hotspot\;C:\Program Files\Git\cmd;C:\Users\H40040\AppData\Local\Android\Sdk\cmdline-tools\bin\tools;C:\Users\H40040\AppData\Local\Android\Sdk\tools;C:\Users\H40040\AppData\Local\Android\Sdk\platform-tools;C:\Users\H40040\AppData\Local\Android\Sdk\tools;C:\Users\H40040\AppData\Local\Android\Sdk\tools;C:\Users\H40040\AppData\Local\Microsoft\WindowsApps;C:\Users\H40040\AppData\Local\Programs\Microsoft VS Code\bin;C:\MongoDB\Mongosh\bin;C:\Program Files\JetBrains\DataGrip 2024.3.5\bin;;C:\Users\H40040\AppData\Local\Programs\mongosh\;C:\Users\H40040\AppData\Local\Android\Sdk\platform-tools;C:\Users\H40040\AppData\Roaming\npm;C:\Users\H40040\AppData\Local\Programs\Windsurf\bin" />
+      <env name="GRADLE" value="c:\Usuários\H40040\gradle" />
+    </envs>
+    <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
+    <option name="MAIN_CLASS_NAME" value="gradle" />
+    <module name="NoPainNoGain" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
