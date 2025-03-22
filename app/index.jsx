@@ -12,9 +12,6 @@ export default function IndexScreen() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
 
   return isAuthenticated ? <Redirect href="/DashboardScreen" /> : <Redirect href="/LoginScreen" />;
 }
