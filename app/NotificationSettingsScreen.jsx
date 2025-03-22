@@ -29,7 +29,7 @@ export default function NotificationSettingsScreen() {
   const fetchNotificationSettings = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${config.API_URL}/user/notifications`);
+      const response = await axios.get(`${config.USER.PROFILE}`);
       setSettings(response.data);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível carregar as configurações de notificação.');
@@ -41,7 +41,7 @@ export default function NotificationSettingsScreen() {
   const saveSettings = async () => {
     setLoading(true);
     try {
-      await axios.put(`${config.API_URL}/user/notifications`, settings);
+      await axios.put(`${config.USER.PROFILE}`, settings);
       Alert.alert('Sucesso', 'Configurações de notificação salvas!');
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível salvar as configurações de notificação.');

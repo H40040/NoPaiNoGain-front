@@ -62,7 +62,7 @@ export default function ProfileScreen() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await axios.put(`${config.API_URL}/user/profile`, profileData);
+      await axios.put(`${config.USER.PROFILE}`, profileData);
       dispatch(updateUserProfile(profileData));
       Alert.alert('Sucesso', 'Perfil atualizado com sucesso!');
     } catch (error) {

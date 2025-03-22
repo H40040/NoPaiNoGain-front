@@ -26,7 +26,7 @@ const ManageWorkoutsScreen = () => {
 
   const fetchWorkouts = async () => {
     try {
-      const response = await axios.get(`${config.API_URL}/user/workouts`);
+      const response = await axios.get(`${config.WORKOUTS.LIST}`);
       dispatch(setWorkouts(response.data));
     } catch (error) {
       Alert.alert('Erro', 'Falha ao buscar treinos.');
@@ -38,7 +38,7 @@ const ManageWorkoutsScreen = () => {
       { text: 'Cancelar', style: 'cancel' },
       { text: 'Excluir', onPress: async () => {
           try {
-            await axios.delete(`${config.API_URL}/user/workouts/${id}`);
+            await axios.delete(`${config.WORKOUTS.DELETE}/${id}`);
             dispatch(setWorkouts(workouts.filter(workout => workout.id !== id)));
             Alert.alert('Sucesso', 'Treino excluído com sucesso!');
           } catch (error) {
@@ -57,7 +57,7 @@ const ManageWorkoutsScreen = () => {
     
     setIsDeleting(true);
     try {
-      await axios.delete(`${config.API_URL}/user/workouts/batch`, { data: { ids: selectedWorkouts } });
+      await axios.delete(`${config.WORKOUTS.DELETE}/${id}`, { data: { ids: selectedWorkouts } });
       dispatch(setWorkouts(workouts.filter(workout => !selectedWorkouts.includes(workout.id))));
       setSelectedWorkouts([]);
       Alert.alert('Sucesso', 'Treinos excluídos com sucesso!');

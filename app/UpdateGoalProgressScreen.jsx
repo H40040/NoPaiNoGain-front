@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import config from '../config';
 
 const UpdateGoalProgressScreen = ({ goalId }) => {
   const [progress, setProgress] = useState('');
@@ -12,7 +12,7 @@ const UpdateGoalProgressScreen = ({ goalId }) => {
     setLoading(true);
     setError(null);
     try {
-      await axios.put(`${API_BASE_URL}/goals/${goalId}/progress`, { progress });
+      await axios.put(`${config.USER_GOALS.UPDATE_PROGRESS}/${id}`, { progress });
     } catch (err) {
       setError('Failed to update progress.');
     } finally {

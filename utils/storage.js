@@ -124,6 +124,7 @@ export const storage = {
         'Authorization': `Bearer ${userData.token}`,
         'Content-Type': 'application/json'
       };
+      console.log('TOKEN', userData.token);
     } catch (error) {
       console.error('Erro ao obter cabeçalhos de autenticação:', error);
       return {};

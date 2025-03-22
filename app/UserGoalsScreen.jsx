@@ -7,6 +7,7 @@ import storage from '../utils/storage';
 import Text from '../components/Text';
 import Button from '../components/Button';
 import GoalItem from '../components/GoalItem';
+import config from '../config';
 import theme from '../theme';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
@@ -20,8 +21,8 @@ export default function UserGoalsScreen() {
     dispatch(fetchUserGoals());
   }, [dispatch]);
 
-  const handleGoalPress = (goalId) => {
-    router.push(`/UserGoalDetailsScreen?goalId=${goalId}`);
+  const handleGoalPress = (id) => {
+    router.push(`/UserGoalDetailsScreen?goalId=${id}`);
   };
 
   const handleDeleteGoal = async (goalId) => {

@@ -30,7 +30,7 @@ export default function SettingsScreen() {
   const fetchSettings = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${config.API_URL}/user/settings`);
+      const response = await axios.get(`${config.USER.PROFILE}`);
       setSettings(response.data);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível carregar as configurações.');
@@ -42,7 +42,7 @@ export default function SettingsScreen() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await axios.put(`${config.API_URL}/user/settings`, settings);
+      await axios.put(`${config.USER.PROFILE}`, settings);
       Alert.alert('Sucesso', 'Configurações salvas com sucesso!');
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível salvar as configurações.');

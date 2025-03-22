@@ -6,8 +6,6 @@ import { storage } from '../../utils/storage';
 import { formatPromptData } from '../../utils/promptUtils';
 import { saveWorkoutToStorage } from '../../utils/storage';
 
-// Configuração base
-const API_URL = config.API_BASE_URL;
 
 // Função para gerar o treino usando a API do Gemini e salvá-lo no backend
 export const generateWorkout = createAsyncThunk(
@@ -196,12 +194,15 @@ export const fetchWorkouts = createAsyncThunk(
   'workouts/fetchWorkouts',
   async (_, { rejectWithValue }) => {
     try {
-      const authHeaders = await storage.getAuthHeaders();
-      
+      const authHeaders = await storage.getAuthHeaders() || {};
+      const TOKEN = authHeaders.token;      
       const response = await axios.get(config.WORKOUTS.LIST, {
         headers: {
-          ...authHeaders
-        }
+            'Method': 'GET',
+            'Access-Control-Allow-Origin': 'http://localhost:8081',
+            'Content-Type': 'application/json',
+            'Token': `Bearer ${TOKEN}`
+          }
       });
       
       if (response.status === 200) {

@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Redirect } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth } from '../store/slices/authSlice';
-import LoadingScreen from '../components/LoadingScreen';
 
 export default function IndexScreen() {
   const dispatch = useDispatch();

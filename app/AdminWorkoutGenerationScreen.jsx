@@ -31,7 +31,7 @@ export default function AdminWorkoutGenerationScreen() {
   const loadSettings = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${config.API_URL}/admin/settings`);
+      const response = await axios.get(`${config.ADMIN.DASHBOARD}`);
       setSettings(response.data);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível carregar as configurações.');
@@ -43,7 +43,7 @@ export default function AdminWorkoutGenerationScreen() {
   const saveSettings = async () => {
     setLoading(true);
     try {
-      await axios.put(`${config.API_URL}/admin/settings`, settings);
+      await axios.put(`${config.ADMIN.USER_DETAILS}/${id}`, settings);
       Alert.alert('Sucesso', 'Configurações atualizadas com sucesso!');
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível atualizar as configurações.');

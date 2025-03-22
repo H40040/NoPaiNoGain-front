@@ -27,7 +27,7 @@ export default function WorkoutDetailsScreen() {
   const fetchWorkoutDetails = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${config.API_URL}/user/workouts/${workoutId}`);
+      const response = await axios.get(`${config.WORKOUTS.DETAILS}/${id}`);
       setFormData(response.data);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível carregar os detalhes do treino.');

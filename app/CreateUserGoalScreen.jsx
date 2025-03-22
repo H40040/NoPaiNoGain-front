@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import config from '../config';
 
 const CreateUserGoalScreen = () => {
   const [goal, setGoal] = useState('');
@@ -13,7 +13,7 @@ const CreateUserGoalScreen = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`${API_BASE_URL}/goals`, { goal, description });
+      const response = await axios.post(`${config.USER_GOALS.CREATE}`, { goal, description });
       console.log('Goal created:', response.data);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create goal.');

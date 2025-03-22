@@ -25,7 +25,7 @@ export default function AnamneseFormScreen() {
   const loadUserData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${config.API_URL}/user/anamnese`);
+      const response = await axios.get(`${config.ANAMNESE.CHECK_STATUS}`);
       setFormData(response.data);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível carregar os dados da anamnese.');
@@ -37,7 +37,7 @@ export default function AnamneseFormScreen() {
   const handleSaveAnamnese = async () => {
     setLoading(true);
     try {
-      await axios.post(`${config.API_URL}/user/anamnese`, formData);
+      await axios.post(`${config.ANAMNESE.CREATE}`, formData);
       Alert.alert('Sucesso', 'Dados da anamnese salvos com sucesso!');
       dispatch(generateWorkout(formData));
       router.push('/GeneratedWorkoutScreen');

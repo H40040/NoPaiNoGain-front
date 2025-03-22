@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import config from '../config';
 
 const UserGoalDetailsScreen = ({ goalId }) => {
   const [goal, setGoal] = useState(null);
@@ -11,7 +11,7 @@ const UserGoalDetailsScreen = ({ goalId }) => {
   useEffect(() => {
     const fetchGoalDetails = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/goals/${goalId}`);
+        const response = await axios.get(`${config.USER_GOALS.DETAILS}/${id}`);
         setGoal(response.data);
       } catch (err) {
         setError('Failed to fetch goal details.');

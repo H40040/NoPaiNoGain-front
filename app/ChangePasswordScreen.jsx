@@ -30,7 +30,7 @@ const ChangePasswordScreen = () => {
     if (!validateForm()) return;
     setLoading(true);
     try {
-      await axios.put(`${config.API_URL}/user/change-password`, {
+      await axios.put(`${config.AUTH.CHANGE_PASSWORD}`, {
         currentPassword,
         newPassword,
       });

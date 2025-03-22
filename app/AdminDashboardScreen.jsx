@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Alert, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
-import API_BASE_URL from '../config';
+import config from '../config';
 import Button from '../components/Button';
 import Text from '../components/Text';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -19,7 +19,7 @@ export default function AdminDashboardScreen() {
   const fetchWorkouts = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/workouts`);
+      const response = await fetch(`${config.ADMIN.DASHBOARD}`);
       const data = await response.json();
       setWorkouts(data);
     } catch (error) {
@@ -31,7 +31,7 @@ export default function AdminDashboardScreen() {
   const deleteWorkout = async (id) => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/workouts/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${config.ADMIN.USER_DETAILS}/${id}`, { method: 'DELETE' });
       if (response.ok) {
         Alert.alert('Sucesso', 'Treino excluído com sucesso!');
         fetchWorkouts();

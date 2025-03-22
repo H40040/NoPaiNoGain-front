@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, FlatList } from 'react-native';
 import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import config from '../config';
 
 const GeneratedWorkoutScreen = () => {
   const [workouts, setWorkouts] = useState([]);
@@ -11,7 +11,7 @@ const GeneratedWorkoutScreen = () => {
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/workouts`);
+        const response = await axios.get(`${config.WORKOUTS.LIST}`);
         setWorkouts(response.data);
       } catch (err) {
         setError('Failed to load workouts.');
