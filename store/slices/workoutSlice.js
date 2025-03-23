@@ -195,13 +195,10 @@ export const fetchWorkouts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const authHeaders = await storage.getAuthHeaders() || {};
-      const TOKEN = authHeaders.token;      
+      
       const response = await axios.get(config.WORKOUTS.LIST, {
         headers: {
-            'Method': 'GET',
-            'Access-Control-Allow-Origin': 'http://localhost:8081',
-            'Content-Type': 'application/json',
-            'Token': `Bearer ${TOKEN}`
+            ...authHeaders
           }
       });
       
