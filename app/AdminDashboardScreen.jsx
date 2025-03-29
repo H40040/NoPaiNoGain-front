@@ -19,7 +19,7 @@ export default function AdminDashboardScreen() {
   const fetchWorkouts = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${config.ADMIN.DASHBOARD}`);
+      const response = await fetch(`${config.API_BASE_URL}/admin/workouts`);
       const data = await response.json();
       setWorkouts(data);
     } catch (error) {
@@ -31,7 +31,7 @@ export default function AdminDashboardScreen() {
   const deleteWorkout = async (id) => {
     setLoading(true);
     try {
-      const response = await fetch(`${config.ADMIN.USER_DETAILS}/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${config.API_BASE_URL}/admin/workouts/${id}`, { method: 'DELETE' });
       if (response.ok) {
         Alert.alert('Sucesso', 'Treino excluído com sucesso!');
         fetchWorkouts();

@@ -21,6 +21,7 @@ const DAYS_OF_WEEK = [
 export default function NotificationSettingsScreen() {
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   useEffect(() => {
     fetchNotificationSettings();
@@ -55,14 +56,51 @@ export default function NotificationSettingsScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Configurações de Notificação</Text>
-      <View style={styles.optionRow}>
-        <Text>Ativar Notificações</Text>
-        <Switch
-          value={settings.enableNotifications}
-          onValueChange={(value) => setSettings({ ...settings, enableNotifications: value })}
-        />
+    <ScrollView style={styles.container}>
+      <View style={styles.section}>
+        <View style={styles.settingRow}>
+          <Text style={styles.settingTitle}>Notificações</Text>
+          <Switch
+            value={settings.enabled}
+            onValueChange={(val) => updateSettings({ ...settings, enabled: val })}
+            trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+          />
+        </View>
+
+        <View style={styles.settingRow}>
+          <Text style={styles.settingTitle}>Vibrar</Text>
+          <Switch
+            value={settings.vibration}
+            onValueChange={(val) => updateSettings({ ...settings, vibration: val })}
+          />
+        </View>
+
+        <View style={styles.settingRow}>
+          <Text style={styles.settingTitle}>Lembrete Antecipado (minutos)</Text>
+          <Slider
+            value={settings.reminderMinutes}
+            onValueChange={(val) => updateSettings({ ...settings, reminderMinutesBefore: val })}
+            minimumValue={0}
+            maximumValue={120}
+            step={5}
+          />
+          <Text>{settings.reminderMinutes} minutos antes</Text>
+        </View>
+
+        <TouchableOpacity onPress={() => setShowTimePicker(true)}>
+          <Text>Selecionar horário padrão: {settings.defaultNotificationTime}</Text>
+        </TouchableOpacity>
+
+        {showTimePicker && (
+          <DateTimePicker
+            mode="time"
+            value={new Date()}
+            onChange={(e, date) => {
+              setShowTimePicker(false);
+              if (date) updateSettings({ ...settings, defaultNotificationTime: date.toLocaleTimeString() });
+            }}
+          />
+        )}
       </View>
       <Button onPress={saveSettings}>Salvar Configurações</Button>
     </ScrollView>

@@ -5,7 +5,7 @@ const API_BASE_URL= "http://10.0.0.109:5000";
 //const API_BASE_URL= "http://127.0.0.1:5000";
 
 const config = {
-  API_BASE_URL,
+  API_BASE_URL: process.env.API_BASE_URL,
   GEMINI_API_KEY: process.env.GEMINI_API_KEY,
   MONGO_URI: process.env.MONGO_URI,
   JWT_SECRET: process.env.JWT_SECRET,
