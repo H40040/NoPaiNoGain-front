@@ -1,27 +1,17 @@
-// Configuração do Redux Store
 import { configureStore } from '@reduxjs/toolkit';
-
-// Importar os reducers
+import thunk from 'redux-thunk'; // Import redux-thunk
 import authReducer from './slices/authSlice';
 import workoutReducer from './slices/workoutSlice';
 import userGoalsReducer from './slices/userGoalsSlice';
 
-// Criar e exportar o store
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     auth: authReducer,
     workouts: workoutReducer,
     userGoals: userGoalsReducer
+    // ...other reducers
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignorar ações específicas ou caminhos de estado que não são serializáveis
-        ignoredActions: ['auth/login/fulfilled', 'auth/check/fulfilled'],
-        ignoredPaths: ['auth.user']
-      }
-    })
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk), // Add redux-thunk middleware
 });
 
-// Exportar o store como padrão também
 export default store;

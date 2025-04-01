@@ -19,6 +19,7 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
+    console.log('isAuthenticated:', isAuthenticated); // Log para verificar o estado de autenticação
     if (isAuthenticated) {
       router.replace('/DashboardScreen');
     }
@@ -26,7 +27,7 @@ export default function RegisterScreen() {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Erro', error);
+      Alert.alert('Erro', error || 'Erro desconhecido.');
       dispatch(clearError());
     }
   }, [error, dispatch]);
@@ -52,12 +53,21 @@ export default function RegisterScreen() {
   };
 
   const handleRegister = async () => {
+    console.log('Iniciando registro...'); // Log para depuração
     if (validateForm()) {
       try {
-        await dispatch(registerUser({ name, email, password })).unwrap();
-        router.replace('/DashboardScreen');
+        const resultAction = await dispatch(registerUser({ name, email, password }));
+        console.log('Resultado da ação:', resultAction); // Log para verificar o resultado da ação
+        if (registerUser.fulfilled.match(resultAction)) {
+          console.log('Usuário registrado com sucesso!');
+          router.replace('/DashboardScreen');
+        } else if (registerUser.rejected.match(resultAction)) {
+          console.error('Erro ao registrar:', resultAction.error.message);
+          Alert.alert('Erro', resultAction.error.message || 'Erro ao realizar cadastro.');
+        }
       } catch (error) {
-        Alert.alert('Erro', error.message || 'Erro ao realizar cadastro.');
+        console.error('Erro inesperado:', error.message);
+        Alert.alert('Erro', error.message || 'Erro inesperado.');
       }
     }
   };
@@ -71,7 +81,7 @@ export default function RegisterScreen() {
         value={name}
         onChangeText={setName}
         autoCapitalize="words"
-        Ionicons="person-outline"
+        iconName="person-outline"
       />
 
       <Input
@@ -80,7 +90,7 @@ export default function RegisterScreen() {
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
-        Ionicons="email-outline"
+        iconName="email-outline"
       />
 
       <Input
@@ -88,7 +98,7 @@ export default function RegisterScreen() {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        Ionicons="lock-outline"
+        iconName="lock-outline"
       />
 
       <Button onPress={handleRegister} disabled={loading}>
@@ -104,6 +114,7 @@ export default function RegisterScreen() {
       </Button>
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({

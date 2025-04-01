@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 
 // Implementação da função atob para React Native
 function atob(input) {
@@ -22,6 +24,7 @@ function atob(input) {
 
   return output;
 }
+
 
 // Constantes para armazenamento
 const USER_DATA_KEY = '@user_data';
@@ -124,7 +127,6 @@ export const storage = {
         'Authorization': `Bearer ${userData.token}`,
         'Content-Type': 'application/json'
       };
-      console.log('TOKEN', userData.token);
     } catch (error) {
       console.error('Erro ao obter cabeçalhos de autenticação:', error);
       return {};
@@ -223,4 +225,97 @@ export const storage = {
   }
 };
 
-export default storage;
+
+// Define the checkAuth async thunk
+export const checkAuth = createAsyncThunk('auth/checkAuth', async (_, { getState }) => {
+  // Replace with your logic to check authentication
+  const state = getState();
+  const isAuthenticated = !!state.auth.token; // Example logic
+  return isAuthenticated;
+});
+
+// Define the loginUser async thunk
+export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, password }, { rejectWithValue }) => {
+  try {
+    const response = await fetch('http://10.0.0.109:5000/api/login', { // Ensure the correct API endpoint
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      return rejectWithValue(errorData.message || 'Login failed');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message || 'Network error');
+  }
+});
+
+// Define the registerUser async thunk
+export const registerUser = createAsyncThunk(
+  'auth/registerUser',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/register', userData); // Substitua pela URL correta
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data || 'Erro ao registrar usuário.';
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: {
+    isAuthenticated: false,
+    token: null,
+    loading: false,
+    error: null,
+    // ...other initial state...
+  },
+  reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+    // ...existing reducers...
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        state.isAuthenticated = action.payload;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.token = action.payload.token;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Login failed';
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.token = action.payload.token;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Erro ao registrar usuário.';
+      });
+    // ...other extra reducers...
+  },
+});
+
+export const { clearError /* existing exports */ } = authSlice.actions;
+export default authSlice.reducer;

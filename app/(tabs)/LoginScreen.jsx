@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
-import { checkAuth, loginUser } from '../../store/slices/authSlice';
+import { checkAuth, loginUser } from '../../store/slices/authSlice'; // Ensure correct import
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import theme from '../../theme';
@@ -12,10 +12,11 @@ function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const dispatch = useDispatch();
   const router = useRouter();
-  const { loading, error, isAuthenticated } = useSelector(state => state.auth);
+  const { isAuthenticated } = useSelector(state => state.auth || {}); // Add fallback to prevent destructuring undefined
 
   useEffect(() => {
     dispatch(checkAuth()); // Verifica autenticação ao carregar a tela
@@ -27,6 +28,7 @@ function LoginScreen() {
   }, [isAuthenticated]);
 
   const handleLogin = async () => {
+    setLoading(true); // Set loading to true when login starts
     try {
       const response = await dispatch(loginUser({ email, password })).unwrap();
       console.log('Login successful:', response);
@@ -34,6 +36,8 @@ function LoginScreen() {
     } catch (error) {
       setErrorMessage(error?.message || 'Falha ao realizar login. Verifique suas credenciais.');
       console.error('Login error:', error);
+    } finally {
+      setLoading(false); // Set loading to false when login ends
     }
   };
 

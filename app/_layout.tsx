@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { Provider } from 'react-redux';
-import { store } from '../store'; // Import your store
+import { store } from '../store/__index'; // Import your store
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -53,7 +53,6 @@ export default function RootLayout() {
         >
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="RegisterScreen" options={{ title: 'Register', headerShown: false }}/>
           <Stack.Screen name="DashboardScreen" options={{ title: 'Dashboard', headerShown: false }}/>
           <Stack.Screen name="ProfileScreen" options={{ title: 'Profile', headerShown: false }}/>
           <Stack.Screen name="WorkoutsScreen" options={{ title: 'Workouts', headerShown: false }}/>
