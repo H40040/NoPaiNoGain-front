@@ -3,7 +3,7 @@ import { View, FlatList, Alert, StyleSheet, ActivityIndicator, TouchableOpacity 
 import { useRouter } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth } from '../store/slices/authSlice';
-import axios from 'axios';
+import api from '../store/api';
 import config from '../config';
 import Button from '../components/Button';
 import Text from '../components/Text';
@@ -25,7 +25,13 @@ export default function DashboardScreen() {
   const fetchWorkouts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${config.WORKOUTS.LIST}`);
+      const userData = await AsyncStorage.getItem('@user_data');
+      const token = userData ? JSON.parse(userData).token : null;
+      const response = await api.get(config.WORKOUTS.LIST, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setWorkouts(response.data);
     } catch (error) {
       Alert.alert('Erro', 'Falha ao buscar treinos: ' + (error.response?.data?.message || error.message));
@@ -33,13 +39,13 @@ export default function DashboardScreen() {
       setLoading(false);
     }
   };
-
+  
   const deleteWorkout = async (id) => {
     Alert.alert('Confirmação', 'Tem certeza que deseja excluir este treino?', [
       { text: 'Cancelar', style: 'cancel' },
       { text: 'Excluir', onPress: async () => {
           try {
-            await axios.delete(`${config.WORKOUTS.DELETE}/${id}`);
+            await api.delete(`${config.WORKOUTS.DELETE}/${id}`);
             setWorkouts(workouts.filter(workout => workout.id !== id));
             Alert.alert('Sucesso', 'Treino excluído com sucesso!');
           } catch (error) {

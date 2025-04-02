@@ -56,7 +56,7 @@ export default function RegisterScreen() {
     console.log('Iniciando registro...'); // Log para depuração
     if (validateForm()) {
       try {
-        const resultAction = await dispatch(registerUser({ name, email, password }));
+        const resultAction = dispatch(registerUser({ name, email, password }));
         console.log('Resultado da ação:', resultAction); // Log para verificar o resultado da ação
         if (registerUser.fulfilled.match(resultAction)) {
           console.log('Usuário registrado com sucesso!');

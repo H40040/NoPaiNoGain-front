@@ -13,7 +13,7 @@ const config = {
   AUTH_TOKEN_KEY: '@user_data',
   WORKOUT_STORAGE_KEY: '@workout_data',
   AUTH: {
-    LOGIN: `${API_BASE_URL}/api/login`,
+    LOGIN: `${API_BASE_URL}/api/user/login`,
     REGISTER: `${API_BASE_URL}/api/user/register`,
     PROFILE: `${API_BASE_URL}/api/user/profile`,
     CHANGE_PASSWORD: `${API_BASE_URL}/api/user/change-password`,

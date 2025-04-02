@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import api from '../api'; // Importe a instância da API
+import config from '../../config'; // Importe o arquivo de configuração
 
 
 // Implementação da função atob para React Native
@@ -258,9 +260,15 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/register', userData); // Substitua pela URL correta
+      console.log('Enviando dados para registro:', userData);
+      const response = await api.post(config.AUTH.REGISTER, userData);
+      console.log('Resposta da API:', response.data);
+      if (response.data.token) {
+        await AsyncStorage.setItem('@user_data', JSON.stringify({ token: response.data.token }));
+      }
       return response.data;
     } catch (error) {
+      console.error('Erro ao registrar usuário:', error.response?.data || error.message);
       const errorMessage = error.response?.data || 'Erro ao registrar usuário.';
       return rejectWithValue(errorMessage);
     }
